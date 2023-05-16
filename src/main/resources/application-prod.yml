@@ -15,6 +15,11 @@ spring:
         git:
           uri: ${CONFIG_SERVER_GIT_URL}
 
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+
 management:
   endpoints:
     web:

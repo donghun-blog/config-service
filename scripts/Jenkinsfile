@@ -3,18 +3,18 @@ pipeline {
 
     environment {
         GIT_BRANCH = 'main'
-        GIT_REPOSITORY_URL = 'https://github.com/donghun-blog/discovery-service.git'
+        GIT_REPOSITORY_URL = 'https://github.com/donghun-blog/config-service.git'
 
-        repository = "alswn4516/donghun-blog-discovery-service"
+        repository = "alswn4516/donghun-blog-config-service"
         DOCKERHUB_CREDENTIALS = credentials('docker_hub_user_credential')
-        DOCKER_CONTAINER_NAME = 'donghun-blog-discovery-service'
+        DOCKER_CONTAINER_NAME = 'donghun-blog-config-service'
 
         PROFILE='-e "SPRING_PROFILES_ACTIVE=prod"'
-        EXTERNAL_PORT = 8761
-        INTERNAL_PORT = 8761
+        EXTERNAL_PORT = 8888
+        INTERNAL_PORT = 8888
         
         SSH_CMD = 'ssh -i /var/lib/jenkins/.ssh/donghun.pem ubuntu@15.164.15.10'
-        ENV_FILE = '--env-file=./env/discovery-service.env'
+        ENV_FILE = '--env-file=./env/config-service.env'
         NETWORK = '--net donghun-blog-network'
 
         DISCORD_WEBHOOK_URL = credentials("discord_webhook")
@@ -60,16 +60,16 @@ pipeline {
 
     post {
             success {
-                discordSend title: "Discovery Service CI/CD 알림",
-                            description: "discovery-service CI/CD 결과",
-                            footer: "discovery-service 빌드 및 배포에 성공했습니다.",
+                discordSend title: "Config Service CI/CD 알림",
+                            description: "config-service CI/CD 결과",
+                            footer: "config-service 빌드 및 배포에 성공했습니다.",
                             link: env.BUILD_URL, result: currentBuild.currentResult,
                             webhookURL: env.DISCORD_WEBHOOK_URL
             }
             failure {
-                discordSend title: "Discovery Service CI/CD 알림",
-                            description: "discovery-service CI/CD 결과",
-                            footer: "discovery-service 빛드 및 배포에 실패했습니다.",
+                discordSend title: "Config Service CI/CD 알림",
+                            description: "config-service CI/CD 결과",
+                            footer: "config-service 빛드 및 배포에 실패했습니다.",
                             link: env.BUILD_URL, result: currentBuild.currentResult,
                             webhookURL: env.DISCORD_WEBHOOK_URL
             }
